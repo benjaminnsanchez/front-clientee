@@ -1,22 +1,22 @@
-/* import { useState } from 'react'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-return (
-    
-  )
+import { useState } from "react"
+const [user,setUser] = useState("")
+const [password,setPassword] = useState("")
+contra = "1234"
+usuario = "pepe"
+const handleLogin = (event)=>{
+  event.preventDefault()
+ 
+  if(user==usuario && password==contra){
+ console.log("increíble react")
+  }
 }
-
-export default App
- */
 const Login = ()=>{
     return <>
      <h1></h1>
-     <form action="">
-      <input required type="text" placeholder='Ingrese tu usuario' /> <br></br>
-      <input required type="password"  placeholder='Ingrese la contraseña de tu usuario'/><br></br>
-      <button type="submit"></button>
+     <form onSubmit={handleLogin}>
+      <input required type="text" name={user} placeholder='Ingrese tu usuario' onChange={(event)=>setUser(event.target.value)} /> <br></br>
+      <input required type="password" name={password} placeholder='Ingrese la contraseña de tu usuario' onChange={(event)=>setPassword(event.target.value)}/><br></br>
+      <button></button>
      </form>
     </>
 }
