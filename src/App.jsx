@@ -1,19 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route } from 'react-router-dom' 
 import './App.css'
-
+import Home from './componentes/home'
+import Login from './componentes/login'
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-     <h1></h1>
-     <form action="">
-      <input type="text" />
-      <input type="text" />
-      <button type="submit"></button>
-     </form>
+    <div>
+      <h1>ruta</h1>
+      <Routes>
+        <Route path='/' element={<Home></Home>}>
+           <Route path='Login' element={<Login></Login>}></Route>
+        </Route>
+      </Routes>
+    </div>
     </>
   )
 }
