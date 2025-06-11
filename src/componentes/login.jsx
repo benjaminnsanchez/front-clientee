@@ -16,6 +16,7 @@ const Login = ()=>{
       console.log("iniciaste sesion")
  } } }
     return <>
+      <img className='imagen' src="https://i.ibb.co/Y7yDrqpx/imagen-del-amazonas.jpg" alt="imagen-del-amazonas" border="0" />
     <div className="login">
      <h1 className="cont-input-title">Log in</h1>
      <form onSubmit={handleLogin}>

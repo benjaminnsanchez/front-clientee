@@ -1,7 +1,7 @@
 .header{
   background-color: rgb(31, 195, 255);
-  display: block;
- 
+  
+ display: flex;
 
 color: white;
 }
@@ -18,14 +18,14 @@ font-family: "Poppins";
 }
 .label{
   margin: 0;
-  margin-left: 20%;
+  margin-left:5%;
   text-align: left;
   font-size: 10px;
 }
 form .input{
     height: 2rem;
    display: block;
-   width: 60%;
+   width: 60vh;
    margin: auto;
    border-radius: 10px;
    font-family: "Cal Sans", sans-serif;
@@ -43,9 +43,14 @@ form .input{
 
 .imagen{
   height: 100vh;
-  width: 70%;
+  width: 50%;
 }
-
+.Sing-up{
+  margin: auto;
+}
+.login{
+margin: auto;
+}
 a{
   color: rgb(255, 255, 255);
   text-decoration: none;
@@ -54,9 +59,33 @@ a{
 
 }
 .buttons{
+ 
+ margin-left: 26.4%;
+ margin-top: 2%;
+
+}
+.buttons a{
+ 
+ margin-left: 2%;
+  margin-right: 2%;
+
+
+}
+.imagen2{
+  width: 1000vh;
+  height: 50vh;
+}
+form{
+  width:100%;
+}
+.buttons-login{
+margin-left: auto;
+ margin-top: 2%;
+
+}
+.mega-div{
   display: flex;
-  justify-content: center;
-  
+
 }
 h1{
 margin: 0;

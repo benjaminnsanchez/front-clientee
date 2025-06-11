@@ -1,6 +1,6 @@
 import { Outlet , Link} from "react-router-dom"
 const Layout = () =>{
-    return <div >
+    return <div className="mega-div" >
     <Outlet />
   
     </div>
