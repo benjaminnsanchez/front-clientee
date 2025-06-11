@@ -17,10 +17,12 @@ const Login = ()=>{
  } } }
     return <>
     <div className="login">
-     <h1>Log in</h1>
+     <h1 className="cont-input-title">Log in</h1>
      <form onSubmit={handleLogin}>
-      <input required type="text" name="user" placeholder='Ingrese tu usuario' onChange={(event)=>setUser(event.target.value)} /> <br></br>
-      <input required type="password" name="password" placeholder='Ingrese la contraseña de tu usuario' onChange={(event)=>setPassword(event.target.value)}/><br></br>
+      <p className="label">Mail</p>
+      <input required type="text" name="user" className="input" placeholder='Ingrese tu usuario' onChange={(event)=>setUser(event.target.value)} /> <br></br>
+      <p className="label">Contraseña</p>
+      <input required type="password" name="password"  className="input"placeholder='Ingrese la contraseña de tu usuario' onChange={(event)=>setPassword(event.target.value)}/><br></br>
       <button type="submit">ingresar</button>
      </form>
     </div>
