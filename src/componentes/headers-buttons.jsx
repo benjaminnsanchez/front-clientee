@@ -8,5 +8,3 @@ const Header_buttons = ()=>{
         </div>
 }
 export default Header_buttons
-/*         <Link to={"/login"}>Login</Link>
-        <Link to={"/sing-up"}>Sing up</Link> */

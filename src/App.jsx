@@ -7,29 +7,45 @@ import Header_buttons from './componentes/headers-buttons'
 import SingUp from './componentes/sing-up'
 import Login_buttons from './componentes/buttons_login'
 import Main_content from './componentes/main-content'
-
+import Vuelos from './componentes/vuelos'
+import Inside from './componentes/inside-image'
+import Carrito from './componentes/carrito'
+   const url ="https://backend-carrito-wa2f.onrender.com/obtener"
+  import { AuthContext } from './AuthContext'
+  import { useContext } from 'react'
+import CustomAlert from './componentes/alerta'
+/*     fetch(url)
+    .then(data => data.json())
+    .then(data=>console.log(data)) */
 function App_header() {
   const location = useLocation(); 
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <>
       <header className='header'>
         <h1>Horizon Air</h1>
         <Header_buttons />
-        <Login_buttons />
+       
       </header>
-
       <main className="main-cont">
-        
         {location.pathname !== "/login" && location.pathname !== "/sing-up" && (
-          <img className='imagen2' src="https://i.ibb.co/Y7yDrqpx/imagen-del-amazonas.jpg" alt="imagen-del-amazonas" border="0" />
+           <Inside></Inside>
+
         )}
-        
+
+        { isLoggedIn &&  (
+           <CustomAlert/>
+        )}
+                     
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="sing-up" element={<SingUp />} />
+            <Route path="vuelos" element={<Vuelos />}/>
+            <Route path="carrito" element={<Home />}/>
+            
           </Route>
         </Routes>
       </main>
