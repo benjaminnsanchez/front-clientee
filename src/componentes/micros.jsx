@@ -1,6 +1,6 @@
 import Agregar_carrito from "./agregar-vuelo"
 import { useEffect,useState } from "react"
-const Vuelos = ()=>{
+const Micros = ()=>{
 
 const colores = [
   "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3", "#33FFF3",
@@ -32,7 +32,7 @@ if(loading) console.log("cargando");
 if(!data) console.log("no hay datos")
     if(data){
 
-const vuelosFiltrados = data.filter(vuelo => vuelo[0].Transporte=="Avion");
+const vuelosFiltrados = data.filter(vuelo => vuelo[0].Transporte=="Bus");
 console.log(vuelosFiltrados)
   return (
         
@@ -60,4 +60,4 @@ return <>
 
 </>
 }
-export default Vuelos
+export default Micros

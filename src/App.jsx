@@ -7,6 +7,7 @@ import Header_buttons from './componentes/headers-buttons'
 import SingUp from './componentes/sing-up'
 import Vuelos from './componentes/vuelos'
 import Inside from './componentes/inside-image'
+import Micros from './componentes/micros'
 import Carrito from './componentes/carrito'
    const url ="https://backend-carrito-wa2f.onrender.com/obtener"
   import { AuthContext } from './AuthContext'
@@ -48,7 +49,7 @@ function App_header() {
             <Route path="sing-up" element={<SingUp />} />
             <Route path="vuelos" element={<Vuelos />}/>
             <Route path="carrito" element={<Home />}/>
-            
+              <Route path="micros" element={<Micros />}/>
           </Route>
         </Routes>
       </main>
