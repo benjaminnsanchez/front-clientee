@@ -22,11 +22,30 @@ useEffect(()=>{
 if(loading) console.log("cargando");
 if(!data) console.log("no hay datos")
     if(data) return (
-        <div>
+        <div className="divConNombre">
     <h2>Vuelos desde Argentina</h2>
-                  <div>
-            
-            <pre>{JSON.stringify(data,null,2)}</pre>
+        <div className="container-div">
+            <div className="vuelo">
+                <h1>{data[0][0].Destino}</h1>
+                <p>{"$"+data[0][0].Precio}</p>
+                <p>{data[0][0].Descripcion}</p>
+            </div>
+            <div className="vuelo">
+                <h1>{data[2][0].Destino}</h1>
+                <p>{"$"+data[2][0].Precio}</p>
+                <p>{data[2][0].Descripcion}</p>
+            </div>
+            <div className="vuelo">
+                <h1>{data[3][0].Destino}</h1>
+                <p>{"$"+data[3][0].Precio}</p>
+                <p>{data[3][0].Descripcion}</p>
+            </div>
+            <div className="vuelo">
+                <h1>{data[4][0].Destino}</h1>
+                <p>{"$"+data[4][0].Precio}</p>
+                <p>{data[4][0].Descripcion}</p>
+            </div>
+            {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
         </div>
 </div>
     )

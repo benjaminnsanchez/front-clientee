@@ -9,7 +9,28 @@ color: white;
   background-color: rgb(58, 147, 255) ;
   color: white;
   font-size: 10px;
+
   
+}
+.divConNombre{
+  width: 98%;
+  margin: auto;
+  box-shadow: black ;
+  
+    
+}
+.vuelo{
+  border-radius:5px ;
+}
+h2{
+  text-align: center;
+}
+.container-div{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+
+ 
 }
 .main-cont-login-page{
   display: flex;
