@@ -97,6 +97,27 @@ border: solid #71777e 1px;
   height: 100vh;
   width: 50%;
 }
+.welcome-message{
+  text-align: center;
+  color: white;
+  font-family: "Poppins";
+  margin: 0;
+  font-size: 5vh;
+  font-weight: bold;
+
+}
+
+.welcome-eslogan{
+  text-align: center;
+  color: rgb(225, 223, 223);
+  font-family: "Poppins";
+  margin: 0;
+  font-size: 2vh;
+
+}
+.user-actions{
+text-align: right;
+}
 .Sing-up{
   margin: auto;
 }

@@ -5,8 +5,6 @@ import Login from './componentes/login'
 import Layout from './componentes/layout'
 import Header_buttons from './componentes/headers-buttons'
 import SingUp from './componentes/sing-up'
-import Login_buttons from './componentes/buttons_login'
-import Main_content from './componentes/main-content'
 import Vuelos from './componentes/vuelos'
 import Inside from './componentes/inside-image'
 import Carrito from './componentes/carrito'
@@ -19,8 +17,12 @@ import CustomAlert from './componentes/alerta'
     .then(data=>console.log(data)) */
 function App_header() {
   const location = useLocation(); 
-  const { isLoggedIn } = useContext(AuthContext);
-
+  const { isLoggedIn,setIsLoggedIn } = useContext(AuthContext);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn"); // ✅ Limpia el estado de sesión
+    navigate("/login"); // ✅ Redirige al login
+  };
   return (
     <>
       <header className='header'>
@@ -29,6 +31,7 @@ function App_header() {
        
       </header>
       <main className="main-cont">
+
         {location.pathname !== "/login" && location.pathname !== "/sing-up" && (
            <Inside></Inside>
 

@@ -9,7 +9,7 @@ const CustomAlert = () => {
     
       {visible && (
         <div style={styles.alert}>
-          <p>Este es un mensaje de alerta personalizado.</p>
+          <p>Iniciaste sesión correctamente!</p>
           <button onClick={() => setVisible(false)} style={styles.closeButton}>
             Cerrar
           </button>
@@ -25,7 +25,7 @@ const styles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    background: "#ff4747",
+    background: " rgb(58, 147, 255)",
     color: "white",
     padding: "20px",
     borderRadius: "8px",
@@ -34,18 +34,19 @@ const styles = {
   },
   button: {
     padding: "10px 20px",
-    background: "#ff4747",
+    background: "rgb(58, 147, 255)",
     color: "white",
     border: "none",
     cursor: "pointer",
     borderRadius: "5px",
   },
   closeButton: {
-    marginTop: "10px",
+    marginTop: "10px 30px",
+    textAlign:"center",
     background: "white",
-    color: "#ff4747",
+    color: " rgb(58, 147, 255)",
     border: "none",
-    padding: "10px 20px",
+   
     cursor: "pointer",
   },
 };

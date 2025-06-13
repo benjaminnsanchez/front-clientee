@@ -1,14 +1,29 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext"; // ✅ Importando el contexto
+import { AuthContext } from "../AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useContext(AuthContext); // ✅ Accediendo al contexto
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const url = "https://dragonball-api.com/api/characters/1";
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  
+
+  // Revisar si hay sesión activa en localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("isLoggedIn");
+    if (storedUser === "true") {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
+  // ✅ Redirigir si el usuario está autenticado
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
   const handleLogin = async (event) => {
     event.preventDefault();
     
@@ -27,10 +42,16 @@ const Login = () => {
   const traerLogin = (data) => {
     if (user === data.name && password === data.gender) {
       setIsLoggedIn(true); // ✅ Guarda el estado global
-      navigate("/");
+      localStorage.setItem("isLoggedIn", "true"); // ✅ Guardar estado en `localStorage`
     } else {
       console.log("Datos incorrectos");
     }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn"); // ✅ Limpiar `localStorage`
+    navigate("/login"); // Redirigir al login
   };
 
   return (
