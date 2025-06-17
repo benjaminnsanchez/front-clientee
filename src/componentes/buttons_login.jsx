@@ -8,8 +8,8 @@ const Login_buttons = () => {
     <>
       {!isLoggedIn && ( // ✅ Mostrar solo si el usuario NO ha iniciado sesión
         <div className="buttons-login">
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/sing-up"}>Sign up</Link>
+          <Link className="link" to={"/login"}>Login</Link>
+          <Link className="link" to={"/sing-up"}>Sign up</Link>
         </div>
       )}
     </>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const SingUp = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [dict, setDict] = useState(null);
-
+  const navigate = useNavigate();
   // Manejo del formulario
   const handleLogin = (event) => {
     event.preventDefault();
@@ -19,6 +19,7 @@ const SingUp = () => {
     };
     
     setDict(diccionario);
+    navigate("/login")
   };
 
   // Enviar datos cuando dict cambie
@@ -42,14 +43,24 @@ const SingUp = () => {
   }, [dict]);
 
   return (
+    <>
+  <img className="imagen" src="https://i.ibb.co/Y7yDrqpx/imagen-del-amazonas.jpg" alt="imagen-del-amazonas" />
+   <div className="login">
+    <h1 className="cont-input-title">Sing up</h1>
     <form id="formularioIngresarCliente" onSubmit={handleLogin}>
-      <input type="text" name="nombre" placeholder="Nombre" onChange={(event) => setNombre(event.target.value)} /><br />
-      <input type="text" name="apellido" placeholder="Apellido" onChange={(event) => setApellido(event.target.value)} /><br />
-      <input type="password" name="contraseña" placeholder="Contraseña" onChange={(event) => setPassword(event.target.value)} /><br />
-      <input type="email" name="correo_electronico" placeholder="Correo Electrónico" onChange={(event) => setMail(event.target.value)} /><br />
+       <p className="label">Nombre:</p>
+      <input required className="input" type="text" name="nombre" placeholder="Ingrese tu nombre:"  onChange={(event) => setNombre(event.target.value)} /><br />
+       <p className="label">Apellido:</p>
+      <input required className="input" type="text" name="apellido" placeholder="Ingrese tu apellido:" onChange={(event) => setApellido(event.target.value)} /><br />
+       <p className="label">Password:</p>
+      <input required className="input" type="password" name="contraseña"placeholder="Ingrese la contraseña de tu usuario:" onChange={(event) => setPassword(event.target.value)} /><br />
+       <p className="label">Mail:</p>
+      <input required className="input" type="email" name="correo_electronico" placeholder="Ingrese el mail de tu usuario:" onChange={(event) => setMail(event.target.value)} /><br />
       <button type="submit">Enviar</button>
     </form>
-  );
+   </div>
+
+  </> );
 };
 
 export default SingUp;

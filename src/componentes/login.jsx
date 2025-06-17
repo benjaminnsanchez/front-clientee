@@ -5,11 +5,12 @@ import { AuthContext } from "../AuthContext";
 const Login = () => {
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const url = "https://dragonball-api.com/api/characters/1";
+  const { mail_guardado,setMail_guardado} = useContext(AuthContext);
+  const url = "https://backend-carrito-alpha.vercel.app/clientes/obtener";
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [data, setData] = useState(null);
 
-  // Revisar si hay sesión activa en localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("isLoggedIn");
     if (storedUser === "true") {
@@ -17,7 +18,7 @@ const Login = () => {
     }
   }, [setIsLoggedIn]);
 
-  // ✅ Redirigir si el usuario está autenticado
+  
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
@@ -32,26 +33,38 @@ const Login = () => {
       if (!response.ok) throw new Error(`Error: ${response.status}`);
       
       const data = await response.json();
+      setData(data)
       traerLogin(data);
       
     } catch (error) {
       console.log("Error en la solicitud:", error);
     }
   };
+const traerLogin = (data) => {
+   const usuarios = data.flat();
+  const encontrado = usuarios.find((usuario) => {
+    return user === usuario.Email && password === usuario.Contraseña;
+  });
 
-  const traerLogin = (data) => {
-    if (user === data.name && password === data.gender) {
-      setIsLoggedIn(true); // ✅ Guarda el estado global
-      localStorage.setItem("isLoggedIn", "true"); // ✅ Guardar estado en `localStorage`
-    } else {
-      console.log("Datos incorrectos");
-    }
-  };
+  if (encontrado) {
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true");
+    setMail_guardado(encontrado.Email);
+  localStorage.setItem("mail_guardado", JSON.stringify(encontrado.Email));
+    
+  } else {
+    console.log("Datos incorrectos");
+  }
+};
+
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); // ✅ Limpiar `localStorage`
-    navigate("/login"); // Redirigir al login
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("mail_guardado");
+setMail_guardado(null);
+ 
+    navigate("/login"); 
   };
 
   return (
@@ -61,24 +74,10 @@ const Login = () => {
         <h1 className="cont-input-title">Log in</h1>
         <form onSubmit={handleLogin}>
           <p className="label">Mail</p>
-          <input
-            required
-            type="text"
-            name="user"
-            className="input"
-            placeholder="Ingrese tu usuario"
-            onChange={(event) => setUser(event.target.value)}
-          />
-          <p className="label">Contraseña</p>
-          <input
-            required
-            type="password"
-            name="password"
-            className="input"
-            placeholder="Ingrese la contraseña de tu usuario"
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <button type="submit">Ingresar</button>
+          <input required type="email" name="correo_electronico" className="input" placeholder="Ingrese tu mail:"onChange={(event) => setUser(event.target.value)}/><br></br>
+          <p className="label">Contraseña:</p>
+          <input required type="password" name="contraseña" className="input" placeholder="Ingrese la contraseña de tu usuario:" onChange={(event) => setPassword(event.target.value)}/><br></br>
+          <button type="submit">Enviar</button>
         </form>
       </div>
     </>

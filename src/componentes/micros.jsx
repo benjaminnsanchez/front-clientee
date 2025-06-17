@@ -3,11 +3,7 @@ import { useEffect,useState } from "react"
 const Micros = ()=>{
 
 const colores = [
-  "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3", "#33FFF3",
-  "#A833FF", "#FF8F33", "#33FFA8", "#A8FF33", "#FF338F", "#33A8FF",
-  "#FFD700", "#8B0000", "#008B8B", "#7CFC00", "#FF4500", "#9400D3",
-  "#1E90FF", "#DC143C", "#00FF7F", "#FF1493"
-];
+"#2d87f9","#392df9","#0b223e","#0b223e","#1c549c","#11335d","#2265bb","#162b86","#082532","#0e3e54"];
 
 
         const [loading,setLoading] = useState(true)
@@ -31,16 +27,16 @@ useEffect(()=>{
 if(loading) console.log("cargando");
 if(!data) console.log("no hay datos")
     if(data){
-
+console.log(data)
 const vuelosFiltrados = data.filter(vuelo => vuelo[0].Transporte=="Bus");
 console.log(vuelosFiltrados)
   return (
         
         <div className="divConNombre">
-    <h2>Vuelos desde Argentina</h2>
+    <h2 className="text_vuelos"> Viajes en Micro</h2>
         <div className="container-div">
     {vuelosFiltrados.map( (vuelo, index) => (
-        <a href="" key={index}>
+        <a key={index}>
           <div 
             className="vuelo" 
             style={{ backgroundColor: colores[Math.floor(Math.random() * colores.length)] }}
