@@ -1,8 +1,6 @@
 import Login_buttons from "./buttons_login"
 import vuelosFiltrados  from "./vuelos"
 import { useNavigate } from "react-router-dom";
-import { Outlet , Link,useLocation} from "react-router-dom"
-import Carrito from "./carrito";
   import { AuthContext } from "../AuthContext";
   import { useContext,useState,useEffect } from 'react'
 const Inside = ()=>{
@@ -23,7 +21,12 @@ const [cuotas, setCuotas] = useState(3);
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn"); 
-    navigate("/login"); //  Redirige al login
+    localStorage.removeItem("mail_guardado");
+ setMail_guardado(null)
+ 
+ 
+  
+    navigate("/login"); 
   };
     const handleAbrirCarrito = () => {
   setAnimandoCierre(false)

@@ -58,14 +58,7 @@ const traerLogin = (data) => {
 };
 
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("mail_guardado");
-setMail_guardado(null);
  
-    navigate("/login"); 
-  };
 
   return (
     <>
