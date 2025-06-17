@@ -16,6 +16,8 @@ const Inside = ()=>{
   const [mostrarDiv,setMostrarDiv] = useState(false)
   const [animandoCierre, setAnimandoCierre] = useState(false); 
     const [metodoPago, setMetodoPago] = useState(null); 
+    const{ autos,setAutos}= useContext(AuthContext);
+const {excursiones,setExcursiones} = useContext(AuthContext);
 const [cuotas, setCuotas] = useState(3);
 
   const handleLogout = () => {
@@ -87,8 +89,23 @@ const diccionarioVenta = {
 
       const data = await res.json();
       console.log("Venta registrada:", data);
+      
     } catch (error) {
       console.error("Error al registrar venta:", error.message);
+    }
+        try {
+      const res_mai = await fetch("https://backend-carrito-alpha.vercel.app/ventas/confirmarMail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(diccionarioVenta),
+      });
+      const data = await res_mai.json();
+      console.log("Se envio mail:", data);
+      
+    } catch (error) {
+      console.error("Error al enviar mail:", error.message);
     }
   }
 
@@ -138,6 +155,7 @@ return <>
       <option value="tarjeta_credito">Tarjeta de crédito</option>
     
     </select>
+
   <h2>Total pagado: ${precioTotal}</h2>
     <button onClick={handleEnviarVenta}>Comprar</button>
 </div>
@@ -149,7 +167,7 @@ return <>
 <Login_buttons />
         {isLoggedIn && (
           <div className="user-actions">
-            <a onClick={handleLogout} href="#">Log out</a>
+            <a className="link" onClick={handleLogout} href="#">Log out</a>
           </div>
         )}
 <div className="icn">
@@ -176,8 +194,8 @@ return <>
            ))}
          {listaCarrito.length > 0 && (
   <div>
-    Total: ${precioTotal}
-    <button onClick={handleComprar}>ir a comprar</button>
+    <p className="tet">Total: ${precioTotal}</p>
+    <button className="boton-compra" onClick={handleComprar}>ir a comprar</button>
     <button className="boton-compra" onClick={() => setListaCarrito([])}>
       Vaciar carrito
     </button>

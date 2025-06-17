@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Outlet , Link} from "react-router-dom"
 const SingUp = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -7,6 +8,7 @@ const SingUp = () => {
   const [apellido, setApellido] = useState("");
   const [dict, setDict] = useState(null);
   const navigate = useNavigate();
+  
   // Manejo del formulario
   const handleLogin = (event) => {
     event.preventDefault();
@@ -44,7 +46,7 @@ const SingUp = () => {
 
   return (
     <>
-  <img className="imagen" src="https://i.ibb.co/Y7yDrqpx/imagen-del-amazonas.jpg" alt="imagen-del-amazonas" />
+    <img className="imagen" src="https://i.ibb.co/tPbRPJyL/sky-8763986-1280.jpg" alt="imagen-del-amazonas" />
    <div className="login">
     <h1 className="cont-input-title">Sing up</h1>
     <form id="formularioIngresarCliente" onSubmit={handleLogin}>
@@ -56,6 +58,7 @@ const SingUp = () => {
       <input required className="input" type="password" name="contraseña"placeholder="Ingrese la contraseña de tu usuario:" onChange={(event) => setPassword(event.target.value)} /><br />
        <p className="label">Mail:</p>
       <input required className="input" type="email" name="correo_electronico" placeholder="Ingrese el mail de tu usuario:" onChange={(event) => setMail(event.target.value)} /><br />
+      <p className="linkkk">¿Ya tenes una cuenta? <Link to={"/login"} >Logeate!</Link></p>
       <button type="submit">Enviar</button>
     </form>
    </div>

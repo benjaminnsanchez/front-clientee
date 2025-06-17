@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom' 
+import { Routes, Route, useLocation,useNavigate } from 'react-router-dom' 
 import './App.css'
 import Home from './componentes/home'
 import Login from './componentes/login'
@@ -9,20 +9,31 @@ import Vuelos from './componentes/vuelos'
 import Inside from './componentes/inside-image'
 import Micros from './componentes/micros'
 import Carrito from './componentes/carrito'
-   const url ="https://backend-carrito-wa2f.onrender.com/obtener"
+   const url ="https://backend-carrito-alpha.vercel.app/viajes/obtener"
   import { AuthContext } from './AuthContext'
-  import { useContext } from 'react'
+  import { useContext,useEffect } from 'react'
 import CustomAlert from './componentes/alerta'
+import Paquetes from './componentes/paquetes'
+
 /*     fetch(url)
     .then(data => data.json())
     .then(data=>console.log(data)) */
 function App_header() {
+  const navigate = useNavigate();
+
+ const {data, setData} =  useContext(AuthContext);
   const location = useLocation(); 
   const { isLoggedIn,setIsLoggedIn } = useContext(AuthContext);
+  useEffect(() => {
+  fetch(url)
+    .then(res => res.json())
+    .then(json => setData(json));
+}, []);
+
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); // ✅ Limpia el estado de sesión
-    navigate("/login"); // ✅ Redirige al login
+    localStorage.removeItem("isLoggedIn"); 
+    navigate("/login");
   };
   return (
     <>
@@ -31,28 +42,82 @@ function App_header() {
         <Header_buttons />
        
       </header>
-      <main className="main-cont">
+  <main className="main-cont">
+  {location.pathname !== "/login" && location.pathname !== "/sing-up" && (
+    <>
+      <Inside />
 
-        {location.pathname !== "/login" && location.pathname !== "/sing-up" && (
-           <Inside></Inside>
+      <div className="bienvenida">
+        <h2>¡Bienvenido a Horizon Air!</h2>
+        <p>Descubrí ofertas imperdibles y organizá tu próxima aventura con nosotros.</p>
+        <button onClick={() => navigate("/vuelos")} className="btn-vuelos">
+          Explorar Vuelos
+        </button>
+      </div>
 
-        )}
+      {isLoggedIn && <CustomAlert />}
 
-        { isLoggedIn &&  (
-           <CustomAlert/>
-        )}
-                     
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="sing-up" element={<SingUp />} />
-            <Route path="vuelos" element={<Vuelos />}/>
-            <Route path="carrito" element={<Home />}/>
-              <Route path="micros" element={<Micros />}/>
-          </Route>
-        </Routes>
-      </main>
+      <div className="destinos-container">
+        <h2 className="titulo-destino"> Destinos Populares</h2>
+        <div className="tarjetas-destinos">
+          {data?.length > 0 &&
+            data.slice(0, 6).map((destino, i) => (
+              <div key={i} className="tarjeta-destino">
+                <h3>{destino.Destino}</h3>
+                <p>Desde ${destino.Precio.toLocaleString()}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div className="tips-viaje">
+        <h2>💡 Tips para viajar más barato</h2>
+        <ul>
+          <li>🔍 Buscá con anticipación para encontrar mejores tarifas.</li>
+          <li>📅 Sé flexible con tus fechas de viaje.</li>
+          <li>🧳 Viajá liviano para evitar cargos por equipaje.</li>
+        </ul>
+      </div>
+    </>
+  )}
+
+  <Routes>
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="login" element={<Login />} />
+      <Route path="sing-up" element={<SingUp />} />
+      <Route path="vuelos" element={<Vuelos />} />
+      <Route path="carrito" element={<Home />} />
+      <Route path="micros" element={<Micros />} />
+      <Route path="paquetes" element={<Paquetes />} />
+    </Route>
+  </Routes>
+</main>
+
+      <footer className="footer">
+  <div className="footer-content">
+    <div>
+      <h3>Horizon Air</h3>
+      <p>Tu próxima aventura comienza acá ✈️</p>
+    </div>
+    <div>
+      <h4>Enlaces</h4>
+      <ul>
+        <li><a href="/vuelos">Vuelos</a></li>
+        <li><a href="/micros">Micros</a></li>
+        <li><a href="/paquetes">Paquetes</a></li>
+        <li><a href="/login">Login</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <p>📧 pruebaOlimpiadas@gmail.com</p>
+      <p>📍 Buenos Aires, Argentina</p>
+    </div>
+  </div>
+  <p className="footer-copy">© {new Date().getFullYear()} Horizon Air. Todos los derechos reservados.</p>
+</footer>
+
     </>
   );
 }

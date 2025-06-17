@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 
-const Vuelos = () => {
+const Paquetes = () => {
   const colores = [
     "#2d87f9", "#392df9", "#0b223e", "#1c549c", "#11335d",
     "#2265bb", "#162b86", "#082532", "#0e3e54"
@@ -11,10 +11,13 @@ const Vuelos = () => {
   const [loading, setLoading] = useState(true);
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const [visibleDiv, setVisibleDiv] = useState(false);
-  const {data, setData} =  useContext(AuthContext);
+  const [data, setData] = useState([]);
   const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
-
-  const url = "https://backend-carrito-alpha.vercel.app/viajes/obtener";
+const{ autos,setAutos}= useContext(AuthContext);
+const {excursiones,setExcursiones} = useContext(AuthContext);
+  const url = "https://backend-carrito-alpha.vercel.app/paqueteDeViajes/obtener";
+ const url_autos = "https://backend-carrito-alpha.vercel.app/autos/obtener";
+const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
   const handleAbrirDiv = () => {
     document.body.style.overflow = "hidden";
     setVisibleDiv(true);
@@ -29,12 +32,45 @@ const Vuelos = () => {
 
   const handlerAgregar = () => {
     if (vueloSeleccionado) {
-
-        setListaCarrito(prev => [...prev, vueloSeleccionado]);
-      
+      setListaCarrito(prev => {
+        const existe = prev.some(item => item.Codigo === vueloSeleccionado.Codigo);
+        return existe ? prev : [...prev, vueloSeleccionado];
+      });
       handleCerrarDiv();
     }
   };
+   useEffect(() => {
+    const fetchData3 = async () => {
+      try {
+        const response = await fetch(url_exc);
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+        const json = await response.json();
+        setExcursiones(json);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData3();
+  }, []);
+ useEffect(() => {
+    const fetchDataa = async () => {
+      try {
+        const response = await fetch(url_autos);
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+        const json = await response.json();
+        setAutos(json);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchDataa();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +79,8 @@ const Vuelos = () => {
         if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
         const json = await response.json();
 
-        const vuelosConColor = json.map((vuelo) => {
+        // Flatten data and add random color
+        const vuelosConColor = json.flat().map((vuelo) => {
           const color = colores[Math.floor(Math.random() * colores.length)];
           return { ...vuelo, color };
         });
@@ -51,22 +88,20 @@ const Vuelos = () => {
         setData(vuelosConColor);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error("Error al cargar los datos:", error);
+        setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
-  // Guardar carrito en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(listaCarrito));
   }, [listaCarrito]);
 
-  const vuelosFiltrados = data?.filter((vuelo) => vuelo.Transporte === "Avion") || [];
-
   return (
     <div className="divConNombre fade-in-viajes">
-      
       {visibleDiv && vueloSeleccionado && (
         <>
           <div className="overlay fade-out" onClick={handleCerrarDiv}></div>
@@ -105,14 +140,13 @@ const Vuelos = () => {
                 <p className="parrafo_compra">Cupos disponibles: {vueloSeleccionado.Cupos}</p>
               </div>
 
-              <div className="conjunto">
-                <i className="fa-solid fa-plane-departure icon"></i>
-                <p className="parrafo_compra">Transporte: {vueloSeleccionado.Transporte}</p>
-              </div>
-
               <p className="parrafo_compra">{vueloSeleccionado.Descripcion}</p>
 
-              <button onClick={handlerAgregar} className="boton-compra" style={{ color: vueloSeleccionado.color }}>
+              <button
+                onClick={handlerAgregar}
+                className="boton-compra"
+                style={{ color: vueloSeleccionado.color }}
+              >
                 <i className="fa-solid fa-cart-shopping"></i> Añadir al carrito
               </button>
             </div>
@@ -120,25 +154,31 @@ const Vuelos = () => {
         </>
       )}
 
-      <h2 className="text_vuelos">Vuelos desde Argentina</h2>
+      <h2 className="text_vuelos">Paquetes de vuelo</h2>
+
       <div className="container-div">
-{vuelosFiltrados.map((vuelo, index) => {
-  const disponible = vuelo.Cupos > 0 && vuelo.Estado?.toLowerCase() === "disponible";
+        {loading ? (
+          <p className="parrafo_compra">Cargando vuelos disponibles...</p>
+        ) : (
+data.map((vuelo, index) => {
+  const disponible = vuelo.Cupos > 0;
 
   return (
     <div
       key={index}
-      className={`vuelo ${!disponible ? "no-disponible" : ""}`}
-      style={{
-        backgroundColor: vuelo.color,
-        cursor: disponible ? "pointer" : "not-allowed",
-        opacity: disponible ? 1 : 0.5
-      }}
+      role={disponible ? "button" : undefined}
+      tabIndex={disponible ? "0" : undefined}
       onClick={() => {
         if (disponible) {
           setVueloSeleccionado(vuelo);
           handleAbrirDiv();
         }
+      }}
+      className={`vuelo ${!disponible ? "no-disponible" : ""}`}
+      style={{
+        backgroundColor: vuelo.color,
+        cursor: disponible ? "pointer" : "not-allowed",
+        opacity: disponible ? 1 : 0.5
       }}
     >
       <h1 className="titulo-compra">{vuelo.Destino}</h1>
@@ -151,11 +191,12 @@ const Vuelos = () => {
       )}
     </div>
   );
-})}
+})
 
+        )}
       </div>
     </div>
   );
 };
 
-export default Vuelos;
+export default Paquetes;
