@@ -44,6 +44,7 @@ const [cuotas, setCuotas] = useState(3);
 }, [listaCarrito]);
 
 const handleComprar = () =>{
+   document.body.style.overflow = "hidden";
   setMostarPaginaCompra(true)
     setMostrarCarrito(false)
   
@@ -129,7 +130,7 @@ return <>
       </div>
     ))}
   </div>
-    <label>
+    <label className="cont-compra-label">
       ¿Deseás realizar el pago en cuotas?
       <input
         type="checkbox"
@@ -139,7 +140,7 @@ return <>
     </label>
     {tieneCuotas && (
   <>
-    <label htmlFor="cuotas">Selecciona la cantidad de cuotas:</label>
+    <label className="cont-compra-label" htmlFor="cuotas">Selecciona la cantidad de cuotas:</label>
     <select id="cuotas" value={cuotas} onChange={(e) => setCuotas(Number(e.target.value))}>
       <option value={3}>3 cuotas</option>
       <option value={6}>6 cuotas</option>
@@ -147,7 +148,7 @@ return <>
       <option value={12}>12 cuotas</option>
     </select>
   </>
-)}<label htmlFor="m_pago">Método de pago</label>
+)}<label className="cont-compra-label" htmlFor="m_pago">Método de pago</label>
     <select id="m_pagos"  onChange={(e) => setMetodoPago(e.target.value)}>
        <option value={undefined}>--Selecciona un método de pago--</option>
       <option value="Transferencia_bancaria">Transferencia bancaria</option>
@@ -157,7 +158,7 @@ return <>
     </select>
 
   <h2>Total pagado: ${precioTotal}</h2>
-    <button onClick={handleEnviarVenta}>Comprar</button>
+    <button className="btn-vuelos" onClick={handleEnviarVenta}>Comprar</button>
 </div>
 
           </>

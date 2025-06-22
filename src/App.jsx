@@ -38,7 +38,7 @@ function App_header() {
   return (
     <>
       <header className='header'>
-        <h1>Horizon Air</h1>
+        <h1 className='header-h1' onClick={() => navigate("/")} >Horizon Air</h1>
         <Header_buttons />
        
       </header>
