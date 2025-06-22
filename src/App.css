@@ -231,13 +231,13 @@ i{
   
 }
 .inside-image{
-
- background-image: url('https://www.cheapflightsfares.com/resources/assets/smm/flights-banner.jpg'); /* Reemplaza con tu URL */
+background-image: linear-gradient(to bottom, rgba(58, 147, 255, 0.5), rgba(242, 244, 246, 0.5)),
+    url('https://www.cheapflightsfares.com/resources/assets/smm/flights-banner.jpg');
   background-size: cover;
   background-repeat: no-repeat; 
   background-position: center top;
   width: 100%;
-  height: 70vh;
+  height: 90vh;
 
 }
 
@@ -387,7 +387,7 @@ text-align: right;
 width: 10px;
 }
 .paginaCompra::-webkit-scrollbar-thumb{
-  background-color:  rgb(58, 147, 255);
+  background-color:  rgb(39, 127, 236);
    border-radius: 2px; 
 }
 body::-webkit-scrollbar{
@@ -585,7 +585,7 @@ text-decoration: none;
   background-color: #1c1c1c;
   color: white;
   padding: 2rem 1.5rem;
-  margin-top: 3rem;
+ 
 }
 
 .footer-content {

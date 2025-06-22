@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation,useNavigate } from 'react-router-dom' 
+import { Routes, Route, useLocation,useNavigate,Link } from 'react-router-dom' 
 import './App.css'
 import Home from './componentes/home'
 import Login from './componentes/login'
@@ -103,10 +103,10 @@ function App_header() {
     <div>
       <h4>Enlaces</h4>
       <ul>
-        <li><a href="/vuelos">Vuelos</a></li>
-        <li><a href="/micros">Micros</a></li>
-        <li><a href="/paquetes">Paquetes</a></li>
-        <li><a href="/login">Login</a></li>
+        <li><Link to={"/vuelos"}>Vuelos</Link></li>
+        <li><Link to={"/paquetes"}>Paquetes</Link></li>
+        <li><Link to={"/micros"}>Micros</Link></li>
+        <li><Link to={"/login"}>Log in</Link></li>
       </ul>
     </div>
     <div>
