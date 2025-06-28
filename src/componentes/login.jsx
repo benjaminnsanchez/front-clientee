@@ -30,7 +30,7 @@ const Login = () => {
      
      event.preventDefault();
  
-     console.log(mail_guardado)
+    
     const dicc={
       usuarioIngresado:mail_guardado,
       contraseñaIngresada: password

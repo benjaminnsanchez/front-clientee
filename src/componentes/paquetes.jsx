@@ -12,6 +12,7 @@ const Paquetes = () => {
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const [visibleDiv, setVisibleDiv] = useState(false);
   const [data, setData] = useState([]);
+      const{dataPaquetes,setDataPaquetes}= useContext(AuthContext)
   const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
 const{ autos,setAutos}= useContext(AuthContext);
 const {excursiones,setExcursiones} = useContext(AuthContext);
@@ -78,8 +79,7 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
         const json = await response.json();
-
-        // Flatten data and add random color
+        setDataPaquetes(json)
         const vuelosConColor = json.flat().map((vuelo) => {
           const color = colores[Math.floor(Math.random() * colores.length)];
           return { ...vuelo, color };
@@ -107,18 +107,16 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
           <div className="overlay fade-out" onClick={handleCerrarDiv}></div>
           <div className={`cont-compra ${mostrarDiv ? "fade-in" : "fade-out"}`}>
             <div className="descripcion">
-              <div className="conjunto-raro">
-                <p className="parrafo_compra">{vueloSeleccionado.Tipo_de_viaje}</p>
-              </div>
-
               <div className="conjunto">
                 <i className="fa-solid fa-chevron-up rari"></i>
                 <h2 className="titulo-compra" style={{ color: vueloSeleccionado.color }}>
                   {vueloSeleccionado.Destino}
                 </h2>
+                   <p className="tipo_viaje">{vueloSeleccionado.Tipo_de_viaje}</p>
               </div>
 
-              <p className="parrafo_compra">${vueloSeleccionado.Precio}</p>
+
+              <h2 className="parrafo_compra">${vueloSeleccionado.Precio}</h2>
 
               <div className="conjunto">
                 <i className="fa-solid fa-location-dot icon"></i>
@@ -126,7 +124,7 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
               </div>
 
               <div className="conjunto">
-                <i className="fa-light fa-clock icon"></i>
+               <i className="fa-solid fa-clock icon"></i>
                 <p className="parrafo_compra">Duración: {vueloSeleccionado.Duracion}</p>
               </div>
 
@@ -147,7 +145,7 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
                 className="boton-compra"
                 style={{ color: vueloSeleccionado.color }}
               >
-                <i className="fa-solid fa-cart-shopping"></i> Añadir al carrito
+                <i style={{ color: vueloSeleccionado.color }} className="fa-solid fa-cart-shopping"></i> Añadir al carrito
               </button>
             </div>
           </div>

@@ -12,6 +12,7 @@ const Vuelos = () => {
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const [visibleDiv, setVisibleDiv] = useState(false);
   const {data, setData} =  useContext(AuthContext);
+    const {datos, setDatos} =  useContext(AuthContext);
   const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
 
   const url = "https://backend-carrito-alpha.vercel.app/viajes/obtener";
@@ -42,7 +43,7 @@ const Vuelos = () => {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
         const json = await response.json();
-
+          setDatos(json)
         const vuelosConColor = json.map((vuelo) => {
           const color = colores[Math.floor(Math.random() * colores.length)];
           return { ...vuelo, color };
@@ -72,18 +73,16 @@ const Vuelos = () => {
           <div className="overlay fade-out" onClick={handleCerrarDiv}></div>
           <div className={`cont-compra ${mostrarDiv ? "fade-in" : "fade-out"}`}>
             <div className="descripcion">
-              <div className="conjunto-raro">
-                <p className="parrafo_compra">{vueloSeleccionado.Tipo_de_viaje}</p>
-              </div>
-
               <div className="conjunto">
                 <i className="fa-solid fa-chevron-up rari"></i>
                 <h2 className="titulo-compra" style={{ color: vueloSeleccionado.color }}>
                   {vueloSeleccionado.Destino}
                 </h2>
+                   <p className="tipo_viaje">{vueloSeleccionado.Tipo_de_viaje}</p>
               </div>
 
-              <p className="parrafo_compra">${vueloSeleccionado.Precio}</p>
+
+              <h2 className="parrafo_compra">${vueloSeleccionado.Precio}</h2>
 
               <div className="conjunto">
                 <i className="fa-solid fa-location-dot icon"></i>
@@ -91,7 +90,7 @@ const Vuelos = () => {
               </div>
 
               <div className="conjunto">
-                <i className="fa-light fa-clock icon"></i>
+               <i className="fa-solid fa-clock icon"></i>
                 <p className="parrafo_compra">Duración: {vueloSeleccionado.Duracion}</p>
               </div>
 
@@ -112,8 +111,12 @@ const Vuelos = () => {
 
               <p className="parrafo_compra">{vueloSeleccionado.Descripcion}</p>
 
-              <button onClick={handlerAgregar} className="boton-compra" style={{ color: vueloSeleccionado.color }}>
-                <i className="fa-solid fa-cart-shopping"></i> Añadir al carrito
+              <button
+                onClick={handlerAgregar}
+                className="boton-compra"
+                style={{ color: vueloSeleccionado.color }}
+              >
+                <i style={{ color: vueloSeleccionado.color }} className="fa-solid fa-cart-shopping"></i> Añadir al carrito
               </button>
             </div>
           </div>

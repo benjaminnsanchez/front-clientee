@@ -1,11 +1,11 @@
 import Login_buttons from "./buttons_login"
-import vuelosFiltrados  from "./vuelos"
+import Header_buttons from "./headers-buttons"
 import { useNavigate } from "react-router-dom";
+
   import { AuthContext } from "../AuthContext";
   import { useContext,useState,useEffect } from 'react'
 const Inside = ()=>{
    const { mail_guardado,setMail_guardado} = useContext(AuthContext);
-  let  [diccionarioo,setDiccionario] = useState(null)
   const [precioTotal,setPrecioTotal] = useState(0)
   const { listaCarrito, setListaCarrito} = useContext(AuthContext);
   const [mostarPaginaCompra,setMostarPaginaCompra] = useState(false)
@@ -13,7 +13,9 @@ const Inside = ()=>{
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [tieneCuotas, setTieneCoutas] = useState(false)
   const { isLoggedIn,setIsLoggedIn } = useContext(AuthContext);
-  const [mostrarDiv,setMostrarDiv] = useState(false)
+      const {datos,setDatos} =  useContext(AuthContext);
+       const{dataPaquetes,setDataPaquetes}= useContext(AuthContext)
+  const [filtroDestinoSect,setFiltroDestinoSect] = useState()
   const [animandoCierre, setAnimandoCierre] = useState(false); 
     const [metodoPago, setMetodoPago] = useState(null); 
     const{ autos,setAutos}= useContext(AuthContext);
@@ -115,14 +117,105 @@ const diccionarioVenta = {
   setMostarPaginaCompra(false);
   document.body.style.overflow = "auto";
 };
+
 return <>
-       {mostarPaginaCompra &&(
+     
+  {/* CONTENEDOR DEL CONTENIDO DENTRO DE LA IMAGEN */}
+<div className='inside-image'>
+  <header className='header'>
+    <div className="cont-header">
+        
+        <img className='header-h1' onClick={() => navigate("/")} src="https://ik.imagekit.io/dbqevvjt4/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(3).png?updatedAt=1751144348189"alt="" />
+        <Header_buttons />
+        {/* BOTÓN DE CARRITO */}
+        <div className="icn">
+                  {/* BOTONES PARA LOGEARSE */}
+               <select name="" id="">
+        <option value="ARS">ARS$</option>
+        <option value="USD">USD$</option>
+       </select>
+        <Login_buttons />
+        {/* BOTÓN PARA DESLOGEARSE */}
+        {isLoggedIn && (
+          <div className="user-actions">
+            <a className="link" onClick={handleLogout} href="#">Log out</a>
+          </div>
+        )}
+        <a onClick={handleAbrirCarrito} className="link"><i className="fa-solid fa-cart-shopping" ></i></a>
+        </div>
+    </div>
+
+  </header>
+
+ {/* TITULO PRINCIPAL */}
+    <p className="welcome-message">¡Bienvenido a Horizon Air!</p>
+    <p className="welcome-eslogan">"Tu próximo destino comienza en Horizon Air"</p>
+ {/* SELECCIÓN DE VUELOS POR FILTROS */}
+ <div className="cont-filtros">
+  <h1>Empezá a buscar tus vacaciones ideales</h1>
+  <div className="buttons-filtros">
+<button>Ida</button>
+<button>Ida y vuelta</button>
+  </div>
+  {/* Seleccionar un destino para filtrar */}
+  <div className="seleccionar-filtro">
+<select id="m_pagos" onChange={(e) => setMetodoPago(e.target.value)}>
+  <option value={undefined}>--Elige un destino--</option>
+<option value="Internacional">Internacional</option>
+<option value="Nacional">Nacional</option>
+</select>
+ {/* Seleccionar un tipo de viaje para filtrar */}
+<select id="m_pagos" onChange={(e) => setMetodoPago(e.target.value)}>
+  <option value={undefined}>--Elige un tipo de viaje--</option>
+  <option value="Ida">Ida</option>
+  <option value="Ida y vuelta">Ida y vuelta</option>
+</select>
+ {/* Seleccionar un rango de precio para filtrar */}
+<select id="m_pagos" onChange={(e) => setMetodoPago(e.target.value)}>
+  <option value={undefined}>--Elige un rango de precio--</option>
+  <option value={90000}>Menos de $90.000</option>
+  <option value={90000}>Mas de $90.000</option>
+  <option value={180000}>Mas de $180.000</option>
+</select>
+
+  </div>
+ </div>
+  {/* CARRITO */}
+{mostrarCarrito && (
+  <div className={`carrito ${animandoCierre ? "fade-out" : "fade-in"}`}>
+        <div className="encabezado_carrito">
+            <a onClick={handleCerrarCarrito} ><h2 className="cerrar">X</h2></a>
+            <h1 className="titulo_carrito">Tu carrito</h1>       
+        </div>
+        <div className="carrito-cont">
+           { listaCarrito.map((vuelo, index) => (           
+            <div className="vuelo-carrito"key={index}>
+              <h1 className="titulo-carrito">{vuelo.Destino}</h1>
+              <p className="parrafo_carrito">${vuelo.Precio}</p>
+              <p className="parrafo_carrito">{vuelo.Descripcion}</p>
+              <hr />     
+            </div>            
+           ))}
+         {listaCarrito.length > 0 && (
+  <div>
+    <p className="tet">Total: ${precioTotal}</p>
+    <button className="boton-compra" onClick={handleComprar}>ir a comprar</button>
+    <button className="boton-compra" onClick={() => setListaCarrito([])}>
+      Vaciar carrito
+    </button>
+  </div>
+)}
+        </div>
+  </div>
+)}
+{/* PAGINA DE COMPRA, CUANDO CLIQUEAS COMPRAR EN EL CARRITO */}
+{mostarPaginaCompra &&(
           <>
 <div className="paginaCompra">
   <a onClick={handleCerrarComprar} ><h2 className="cerrarCompra">X</h2></a>
   <h1 className="titulo-compra">¡Termina tu compra!</h1>
-  <div className="carrito-cont">
-    {listaCarrito.map((vuelo, index) => (
+  <div className="pagina-compra-cont">
+        {listaCarrito.map((vuelo, index) => (
       <div className="vuelo-carrito" key={index}>
         <h2 className="titulo-carrito">{vuelo.Destino}</h2>
         <p className="parrafo_carrito">${vuelo.Precio}</p>
@@ -163,50 +256,8 @@ return <>
 
           </>
         )}
-     <div className='inside-image'>
-      
-<Login_buttons />
-        {isLoggedIn && (
-          <div className="user-actions">
-            <a className="link" onClick={handleLogout} href="#">Log out</a>
-          </div>
-        )}
-<div className="icn">
-<a onClick={handleAbrirCarrito} className="link"><i className="fa-solid fa-cart-shopping" ></i></a>
+</div>
 
-</div>
- <p className="welcome-message">¡Bienvenido a Horizon Air!</p>
- <p className="welcome-eslogan">"Tu próximo destino comienza en Horizon Air"</p>
-         {mostrarCarrito && (
-  <div className={`carrito ${animandoCierre ? "fade-out" : "fade-in"}`}>
-        <div className="encabezado_carrito">
-            <a onClick={handleCerrarCarrito} ><h2 className="cerrar">X</h2></a>
-            <h1 className="titulo_carrito">Tu carrito</h1>       
-        </div>
-        <div className="carrito-cont">
-           { listaCarrito.map((vuelo, index) => (
-           
-            <div className="vuelo-carrito"key={index}>
-              <h1 className="titulo-carrito">{vuelo.Destino}</h1>
-              <p className="parrafo_carrito">${vuelo.Precio}</p>
-              <p className="parrafo_carrito">{vuelo.Descripcion}</p>
-              <hr />     
-            </div>            
-           ))}
-         {listaCarrito.length > 0 && (
-  <div>
-    <p className="tet">Total: ${precioTotal}</p>
-    <button className="boton-compra" onClick={handleComprar}>ir a comprar</button>
-    <button className="boton-compra" onClick={() => setListaCarrito([])}>
-      Vaciar carrito
-    </button>
-  </div>
-)}
-    
-        </div>
-  </div>
-      )}
-</div>
     </>
 }
 export default Inside

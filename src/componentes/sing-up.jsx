@@ -40,13 +40,19 @@ const SingUp = () => {
         }
         return res.json();
       })
-      .then((res) => console.log("Cliente registrado:", res))
+      .then((res) => console.log("Cliente registrado"))
       .catch(console.error);
   }, [dict]);
 
   return (
     <>
-    <img className="imagen" src="https://i.ibb.co/tPbRPJyL/sky-8763986-1280.jpg" alt="imagen-del-amazonas" />
+    <div className="hgg">
+      <div className="ppp">
+    h
+      </div>
+
+    </div>
+  
    <div className="login">
     <h1 className="cont-input-title">Sing up</h1>
     <form id="formularioIngresarCliente" onSubmit={handleLogin}>

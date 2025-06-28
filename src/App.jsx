@@ -1,23 +1,18 @@
 import { Routes, Route, useLocation,useNavigate,Link } from 'react-router-dom' 
 import './App.css'
-import Home from './componentes/home'
+
 import Login from './componentes/login'
 import Layout from './componentes/layout'
-import Header_buttons from './componentes/headers-buttons'
+
 import SingUp from './componentes/sing-up'
 import Vuelos from './componentes/vuelos'
 import Inside from './componentes/inside-image'
 import Micros from './componentes/micros'
-import Carrito from './componentes/carrito'
-   const url ="https://backend-carrito-alpha.vercel.app/viajes/obtener"
-  import { AuthContext } from './AuthContext'
-  import { useContext,useEffect } from 'react'
+const url ="https://backend-carrito-alpha.vercel.app/viajes/obtener"
+import { AuthContext } from './AuthContext'
+import { useContext,useEffect } from 'react'
 import CustomAlert from './componentes/alerta'
 import Paquetes from './componentes/paquetes'
-
-/*     fetch(url)
-    .then(data => data.json())
-    .then(data=>console.log(data)) */
 function App_header() {
   const navigate = useNavigate();
 
@@ -29,25 +24,17 @@ function App_header() {
     .then(res => res.json())
     .then(json => setData(json));
 }, []);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); 
-    navigate("/login");
-  };
   return (
     <>
-      <header className='header'>
-        <h1 className='header-h1' onClick={() => navigate("/")} >Horizon Air</h1>
-        <Header_buttons />
-       
-      </header>
+
   <main className="main-cont">
   {location.pathname !== "/login" && location.pathname !== "/sing-up" && (
     <>
+
       <Inside />
 
       <div className="bienvenida">
+        
         <h2>¡Bienvenido a Horizon Air!</h2>
         <p>Descubrí ofertas imperdibles y organizá tu próxima aventura con nosotros.</p>
         <button onClick={() => navigate("/vuelos")} className="btn-vuelos">
@@ -69,7 +56,7 @@ function App_header() {
             ))}
         </div>
       </div>
-
+            
       <div className="tips-viaje">
         <h2>💡 Tips para viajar más barato</h2>
         <ul>
@@ -83,11 +70,9 @@ function App_header() {
 
   <Routes>
     <Route path="/" element={<Layout />}>
-      <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="sing-up" element={<SingUp />} />
       <Route path="vuelos" element={<Vuelos />} />
-      <Route path="carrito" element={<Home />} />
       <Route path="micros" element={<Micros />} />
       <Route path="paquetes" element={<Paquetes />} />
     </Route>
