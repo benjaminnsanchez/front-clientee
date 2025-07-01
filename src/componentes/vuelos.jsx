@@ -14,7 +14,8 @@ const Vuelos = () => {
   const {data, setData} =  useContext(AuthContext);
     const {datos, setDatos} =  useContext(AuthContext);
   const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
-
+  const {eleccionMoneda, setEleccionMoneda} =useContext(AuthContext);
+const {precio} =useContext(AuthContext)
   const url = "https://backend-carrito-alpha.vercel.app/viajes/obtener";
   const handleAbrirDiv = () => {
     document.body.style.overflow = "hidden";
@@ -81,8 +82,13 @@ const Vuelos = () => {
                    <p className="tipo_viaje">{vueloSeleccionado.Tipo_de_viaje}</p>
               </div>
 
-
-              <h2 className="parrafo_compra">${vueloSeleccionado.Precio}</h2>
+                               {eleccionMoneda ==="ARS" ?(
+            <h2 className="parrafo_compra">${vueloSeleccionado.Precio.toLocaleString()}ARS</h2>
+          ):(
+            <h2 className="parrafo_compra">${parseInt(vueloSeleccionado.Precio/precio).toLocaleString()}USD</h2>
+          )
+          }
+          
 
               <div className="conjunto">
                 <i className="fa-solid fa-location-dot icon"></i>
@@ -145,11 +151,17 @@ const Vuelos = () => {
       }}
     >
       <h1 className="titulo-compra">{vuelo.Destino}</h1>
-      <p className="parrafo_compra">${vuelo.Precio}</p>
+                                   {eleccionMoneda ==="ARS" ?(
+            <p className="parrafo_compra">${vuelo.Precio.toLocaleString()}ARS</p>
+          ):(
+            <p className="parrafo_compra">${parseInt(vuelo.Precio/precio).toLocaleString()}USD</p>
+          )
+          }
+ 
       <p className="parrafo_compra">{vuelo.Descripcion}</p>
       {!disponible && (
         <p className="parrafo_compra" style={{ fontWeight: "bold", color: "#c00" }}>
-          ❌ No disponible
+           No disponible
         </p>
       )}
     </div>

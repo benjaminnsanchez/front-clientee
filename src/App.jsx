@@ -15,10 +15,11 @@ import CustomAlert from './componentes/alerta'
 import Paquetes from './componentes/paquetes'
 function App_header() {
   const navigate = useNavigate();
-
+const {precio} =useContext(AuthContext)
  const {data, setData} =  useContext(AuthContext);
   const location = useLocation(); 
   const { isLoggedIn,setIsLoggedIn } = useContext(AuthContext);
+  const {eleccionMoneda, setEleccionMoneda} =useContext(AuthContext);
   useEffect(() => {
   fetch(url)
     .then(res => res.json())
@@ -51,7 +52,13 @@ function App_header() {
             data.slice(0, 6).map((destino, i) => (
               <div key={i} className="tarjeta-destino">
                 <h3>{destino.Destino}</h3>
-                <p>Desde ${destino.Precio.toLocaleString()}</p>
+                                              {eleccionMoneda ==="ARS" ?(
+            <p className="parrafo_compra">Desde ${destino.Precio.toLocaleString()}ARS</p>
+          ):(
+            <p className="parrafo_compra">${parseInt(destino.Precio/precio).toLocaleString()}USD</p>
+          )
+          }
+                
               </div>
             ))}
         </div>

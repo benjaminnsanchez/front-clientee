@@ -16,9 +16,12 @@ const Paquetes = () => {
   const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
 const{ autos,setAutos}= useContext(AuthContext);
 const {excursiones,setExcursiones} = useContext(AuthContext);
+const {eleccionMoneda, setEleccionMoneda} =useContext(AuthContext);
+const {precio,setPrecio} = useContext(AuthContext)
   const url = "https://backend-carrito-alpha.vercel.app/paqueteDeViajes/obtener";
  const url_autos = "https://backend-carrito-alpha.vercel.app/autos/obtener";
 const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
+const urlDolar="https://dolarapi.com/v1/dolares/oficial"
   const handleAbrirDiv = () => {
     document.body.style.overflow = "hidden";
     setVisibleDiv(true);
@@ -72,7 +75,12 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
 
     fetchDataa();
   }, []);
+  useEffect(() => {
+fetch(urlDolar)
+.then(data => data.json())
+.then(data=>setPrecio(data.compra))
 
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -115,8 +123,13 @@ const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
                    <p className="tipo_viaje">{vueloSeleccionado.Tipo_de_viaje}</p>
               </div>
 
-
-              <h2 className="parrafo_compra">${vueloSeleccionado.Precio}</h2>
+                          {eleccionMoneda ==="ARS" ?(
+            <h2 className="parrafo_compra">${vueloSeleccionado.Precio.toLocaleString()}ARS</h2>
+          ):(
+            <h2 className="parrafo_compra">${parseInt(vueloSeleccionado.Precio/precio).toLocaleString()}USD</h2>
+          )
+          }
+              
 
               <div className="conjunto">
                 <i className="fa-solid fa-location-dot icon"></i>
@@ -180,11 +193,17 @@ data.map((vuelo, index) => {
       }}
     >
       <h1 className="titulo-compra">{vuelo.Destino}</h1>
-      <p className="parrafo_compra">${vuelo.Precio}</p>
+                                {eleccionMoneda ==="ARS" ?(
+            <p className="parrafo_compra">${vuelo.Precio.toLocaleString()}ARS</p>
+          ):(
+            <p className="parrafo_compra">${parseInt(vuelo.Precio/precio).toLocaleString()}USD</p>
+          )
+          }
+      
       <p className="parrafo_compra">{vuelo.Descripcion}</p>
       {!disponible && (
         <p className="parrafo_compra" style={{ fontWeight: "bold", color: "#c00" }}>
-          ❌ No disponible
+           No disponible
         </p>
       )}
     </div>

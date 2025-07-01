@@ -19,9 +19,11 @@ export const AuthProvider = ({ children }) => {
     const[ datos,setDatos]=useState([]);
     const[dataPaquetes,setDataPaquetes]=useState([])
     const[ excursiones,setExcursiones]= useState([])
+    const [eleccionMoneda, setEleccionMoneda] =useState("ARS")
+        const[ precio,setPrecio]= useState(0)
     localStorage.getItem("mail_guardado");
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, listaCarrito, setListaCarrito,mail_guardado,setMail_guardado,data, setData, autos,setAutos,excursiones,setExcursiones,dataPaquetes,setDataPaquetes,datos,setDatos }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, listaCarrito, setListaCarrito,mail_guardado,setMail_guardado,data, setData, autos,setAutos,excursiones,setExcursiones,dataPaquetes,setDataPaquetes,datos,setDatos,eleccionMoneda, setEleccionMoneda,precio,setPrecio }}>
       {children}
     </AuthContext.Provider>
   );
