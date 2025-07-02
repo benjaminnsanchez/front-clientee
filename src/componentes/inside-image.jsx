@@ -23,9 +23,16 @@ import { data, useNavigate } from "react-router-dom";
   const {excursiones,setExcursiones} = useContext(AuthContext);
   const [cuotas, setCuotas] = useState(3);
   const {eleccionMoneda, setEleccionMoneda} =useContext(AuthContext);
-  const {precio} =useContext(AuthContext)
+  const {precio,setPrecio} =useContext(AuthContext)
+  const urlDolar="https://dolarapi.com/v1/dolares/oficial"
   const [paquetesFiltrados,setPaquetesFiltrados] = useState([])
   const url = "https://backend-carrito-alpha.vercel.app/paqueteDeViajes/obtener";
+    useEffect(() => {
+  fetch(urlDolar)
+  .then(data => data.json())
+  .then(data=>setPrecio(data.compra))
+  
+    }, []);
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn"); 
@@ -141,7 +148,7 @@ const handlerFiltar = () => {
     ) || [];
   }
 
-  console.log(filtrado);
+  
   setPaquetesFiltrados(filtrado);
 };
 
@@ -161,6 +168,7 @@ useEffect(() => {
 
     fetchData();
   }, []);
+ 
 return <>
      
   {/* CONTENEDOR DEL CONTENIDO DENTRO DE LA IMAGEN */}
@@ -234,10 +242,10 @@ return <>
             <div className="vuelo-carrito"key={index}>
               <h1 className="titulo-carrito">{vuelo.Destino}</h1>
               
-                                             {eleccionMoneda ==="ARS" ?(
+            {eleccionMoneda ==="ARS" ?(
             <p className="parrafo_carrito">${vuelo.Precio.toLocaleString()}ARS</p>
           ):(
-            <p className="parrafo_carrito">${parseInt(vuelo.Precio/precio).toLocaleString()}USD</p>
+            <p className="parrafo_carrito">${parseInt(vuelo.Precio/precio)}USD</p>
           )
           }
             

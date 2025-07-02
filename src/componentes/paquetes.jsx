@@ -21,7 +21,7 @@ const {precio,setPrecio} = useContext(AuthContext)
   const url = "https://backend-carrito-alpha.vercel.app/paqueteDeViajes/obtener";
  const url_autos = "https://backend-carrito-alpha.vercel.app/autos/obtener";
 const url_exc =  "https://backend-carrito-alpha.vercel.app/excursiones/obtener";
-const urlDolar="https://dolarapi.com/v1/dolares/oficial"
+
   const handleAbrirDiv = () => {
     document.body.style.overflow = "hidden";
     setVisibleDiv(true);
@@ -75,12 +75,7 @@ const urlDolar="https://dolarapi.com/v1/dolares/oficial"
 
     fetchDataa();
   }, []);
-  useEffect(() => {
-fetch(urlDolar)
-.then(data => data.json())
-.then(data=>setPrecio(data.compra))
 
-  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
