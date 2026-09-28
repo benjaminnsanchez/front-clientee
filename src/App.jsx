@@ -65,11 +65,11 @@ const {precio} =useContext(AuthContext)
       </div>
             
       <div className="tips-viaje">
-        <h2>💡 Tips para viajar más barato</h2>
+        <h2>Tips para viajar más barato</h2>
         <ul>
-          <li>🔍 Buscá con anticipación para encontrar mejores tarifas.</li>
-          <li>📅 Sé flexible con tus fechas de viaje.</li>
-          <li>🧳 Viajá liviano para evitar cargos por equipaje.</li>
+          <li> Buscá con anticipación para encontrar mejores tarifas.</li>
+          <li>Sé flexible con tus fechas de viaje.</li>
+          <li> Viajá liviano para evitar cargos por equipaje.</li>
         </ul>
       </div>
     </>
@@ -90,7 +90,7 @@ const {precio} =useContext(AuthContext)
   <div className="footer-content">
     <div>
       <h3>Horizon Air</h3>
-      <p>Tu próxima aventura comienza acá ✈️</p>
+      <p>Tu próxima aventura comienza acá </p>
     </div>
     <div>
       <h4>Enlaces</h4>
@@ -103,8 +103,8 @@ const {precio} =useContext(AuthContext)
     </div>
     <div>
       <h4>Contacto</h4>
-      <p>📧 pruebaOlimpiadas@gmail.com</p>
-      <p>📍 Buenos Aires, Argentina</p>
+      <p> pruebaOlimpiadas@gmail.com</p>
+      <p> Buenos Aires, Argentina</p>
     </div>
   </div>
   <p className="footer-copy">© {new Date().getFullYear()} Horizon Air. Todos los derechos reservados.</p>
